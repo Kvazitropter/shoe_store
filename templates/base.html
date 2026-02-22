@@ -10,89 +10,194 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-size: 18px;
         }
 
         body {
-            background-color: #ddd;
+            background-color: gainsboro;
         }
 
         .navbar {
-            background-color: #fff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 0.8rem 2rem;
+            height: 70px;
+            padding: 20px 30px;
+            
             display: flex;
             align-items: center;
             justify-content: space-between;
-            position: sticky;
+            
+            position: fixed;
+            left: 0;
             top: 0;
-            z-index: 1000;
+            right: 0;
+            background-color: white;
         }
 
         .nav-menu {
             display: flex;
-            gap: 2rem;
+            gap: 30px;
             list-style: none;
         }
 
         .nav-item a {
             text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            font-size: 1.1rem;
-            transition: color 0.2s;
-            padding: 0.5rem 0;
-            border-bottom: 2px solid transparent;
+            color: dimgray;
+            font-size: 18px;
+            padding: 10px 0;
         }
-
+        
         .nav-item a:hover {
             color: cornflowerblue;
-            border-bottom-color: cornflowerblue;
+            border-bottom: 2px solid cornflowerblue;
         }
 
         .user-section {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            gap: 20px;
         }
 
-        .username strong {
+        .username {
             color: black;
-            font-weight: 600;
+            font-weight: bold;
         }
 
         .btn {
-            padding: 0.5rem 1.2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background-color 0.2s, color 0.2s;
+            width: 100%;
+            color: white;
+    
+            padding: 8px 12px;
             border: 1px solid transparent;
-        }
-
-        .btn-logout {
-            background-color: red;
-            color: white;
-        }
-
-        .btn-logout:hover {
-            background-color: darkred;
-        }
-
-        .btn-login {
+            border-radius: 10px;
             background-color: cornflowerblue;
-            color: white;
         }
 
-        .btn-login:hover {
+        .btn:hover {
             background-color: royalblue;
+            cursor: pointer;
+        }
+
+        .btn a {
+            color: white;
+            text-decoration: none;
         }
 
         .content {
-            padding: 2rem;
-            max-width: 1400px;
+            padding: 100px;
+            width: 100vw;
+            height: calc(100vh - 70px);
             margin: 0 auto;
         }
-    </style>
+
+        [class$="form-container"] {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 20px;
+            background-color: gainsboro;
+        }
+
+        [class$="form"] {
+            background-color: white;
+            padding: 40px 30px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        [class$="form-title"] {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+            font-weight: 500;
+            font-size: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid gainsboro;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: cornflowerblue;
+            outline: none;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 5px;
+            padding-left: 5px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        [class$="redirect-message"] {
+            text-align: center;
+            padding-top: 20px;
+        }
+
+        [class$="redirect-message"] a {
+            color: royalblue;
+            font-size: 18px;
+        }
+
+        .empty-massage {
+            text-align: center;
+            width: 100%;
+            color: gray;
+        }
+
+        .add-btn {
+            width: auto;
+            position: fixed;
+            bottom: 50px;
+            right: 40px;
+        }
+
+        .btn-delete {
+            background-color: red;
+        }
+
+        .btn-delete:hover {
+            background-color: darkred;
+        }
+
+        .back-arrow {
+            text-decoration: none;
+            width: 20px;
+            height: 20px;
+            font-size: 30px;
+            font-weight: bold;
+            color: gray;
+        }
+        
+        .back-arrow:hover {
+            color: dimgray;
+            cursor: pointer;
+        }
+        </style>
     {% block style %}
     {% endblock %}
 </head>
@@ -100,21 +205,25 @@
     <header>
         <nav class="navbar">
             <ul class="nav-menu">
-                <li class="nav-item"><a href="{% url 'products' %}">Главная</a></li>
+                <li class="nav-item"><a href="{% url 'products' %}">Товары</a></li>
+                {% if is_admin or is_manager %}
                 <li class="nav-item"><a href="{% url 'orders' %}">Заказы</a></li>
+                {% endif %}
             </ul>
 
             <div class="user-section">
                 {% if user.is_authenticated %}
                     <span class="username">
-                        <strong>{{ user.last_name }} {{ user.first_name }} {{ user.patronymic|default:'' }}</strong>
+                        {{ user.last_name }}
+                        {{ user.first_name }}
+                        {{ user.patronymic|default:'' }}
                     </span>
                     <form action="{% url 'logout' %}" method="post" style="display: inline;">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-logout">Выйти</button>
+                        <button type="submit" class="btn">Выйти</button>
                     </form>
                 {% else %}
-                    <a href="{% url 'login' %}" class="btn btn-login">Войти</a>
+                    <button class="btn"><a href="{% url 'login' %}">Войти</a></button>
                 {% endif %}
             </div>
         </nav>

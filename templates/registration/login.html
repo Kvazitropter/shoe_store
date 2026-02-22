@@ -4,96 +4,11 @@
 
 {% block style %}
     <style>
-        .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 80vh;
-            padding: 20px;
-            background: #ddd;
-        }
-
-        .login-form {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px gray;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .form-title {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #333;
-            font-weight: 500;
-            font-size: 28px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 18px;
-        }
-
-        .login-form input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            box-sizing: border-box;
-        }
-
-        .login-form input:focus {
-            border-color: cornflowerblue;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(74,144,226,0.1);
-        }
-
-        .error-message {
-            color: #e74c3c;
-            font-size: 13px;
-            margin-top: 5px;
-            padding-left: 5px;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 14px;
-            background: cornflowerblue;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .submit-btn:hover {
-            background: royalblue;
-        }
-
-        .signup-message {
-            text-align: center;
-            padding-top: 20px;
-        }
-
-        .signup-message a {
-            color: royalblue;
-            font-size: 18px;
-        }
     </style>
 {% endblock style %}
 
 {% block content %}
-<div class="login-container">
+<div class="login-form-container">
     <form method="post" enctype="multipart/form-data" class="login-form">
         {% csrf_token %}
 
@@ -119,9 +34,9 @@
             {% endif %}
         </div>
     
-        <button type="submit" class="submit-btn">Войти</button>
+        <button type="submit" class="btn">Войти</button>
 
-        <div class="signup-message">
+        <div class="signup-redirect-message">
             <p><a href="{% url 'signup' %}">Создать аккаунт</a></p>
         </div>
     </form>

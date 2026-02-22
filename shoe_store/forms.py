@@ -6,6 +6,10 @@ from shoe_store.models import User, Role, Product, Order
 
 class LoginForm(AuthenticationForm):
     username = forms.EmailField(label='Email', max_length=255, widget=forms.EmailInput(attrs={'autofocus': True}))
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['password'].label = 'Пароль'
 
 
 class SignUpForm(UserCreationForm):
@@ -21,6 +25,8 @@ class SignUpForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['last_name'].widget = forms.TextInput(attrs={'autofocus': True})
+
         self.fields['email'].label = 'Email'
         self.fields['first_name'].label = 'Имя'
         self.fields['last_name'].label = 'Фамилия'

@@ -2,10 +2,11 @@ from django.views.generic.edit import CreateView
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import Q
 
 from pathlib import Path
 from shoe_store.settings import BASE_DIR
-from shoe_store.models import Product, Order
+from shoe_store.models import Product, Order, Provider
 from shoe_store.forms import SignUpForm, ProductForm, OrderForm
 
 
@@ -32,14 +33,29 @@ class SignUpView(CreateView):
 
 @login_required
 def products_page(request):
+    search_query = request.GET.get('search_query', '')
+    selected_provider_id = request.GET.get('selected_provider_id')
+    output_order = request.GET.get('output_order')
     html_file = templates / 'products.html'
-    products = Product.objects.all()
+    products = Product.objects.all() \
+        .filter(
+            Q(article__iregex=f'(?i){search_query}') |
+            Q(description__iregex=f'(?i){search_query}')
+        )
+    if selected_provider_id:
+        products = products.filter(provider=int(selected_provider_id))
+    if output_order:
+        products = products.order_by(output_order)
     
     context = {
         'title': 'Товары',
         'products': products,
         'is_admin': is_admin(request.user),
         'is_manager': is_manager(request.user),
+        'search_query': search_query,
+        'providers': Provider.objects.all(),
+        'selected_provider_id': selected_provider_id,
+        'output_order': output_order,
     }
     return render(request, html_file.as_posix(), context)
 
@@ -55,7 +71,13 @@ def product_add(request):
             return redirect('products')
     else:
         form = ProductForm()
-    return render(request, 'product_form.html', {'form': form, 'title': 'Добавить товар'})
+    context = {
+        'title': 'Добавить товар',
+        'form': form,
+        'is_admin': is_admin(request.user),
+        'is_manager': is_manager(request.user),
+    }
+    return render(request, 'product_form.html', context)
 
 
 @login_required
@@ -69,7 +91,13 @@ def product_edit(request, pk):
             return redirect('products')
     else:
         form = ProductForm(instance=product)
-    return render(request, 'product_form.html', {'form': form, 'title': 'Редактировать товар'})
+    context = {
+        'title': 'Редактировать товар',
+        'form': form,
+        'is_admin': is_admin(request.user),
+        'is_manager': is_manager(request.user),
+    }
+    return render(request, 'product_form.html', context)
 
 
 @login_required
@@ -91,6 +119,8 @@ def orders_page(request):
         'title': title,
         'is_admin': is_admin(request.user),
         'orders': orders,
+        'is_admin': is_admin(request.user),
+        'is_manager': is_manager(request.user),
     }
     return render(request, html_file.as_posix(), context)
 
@@ -105,7 +135,13 @@ def order_add(request):
             return redirect('orders')
     else:
         form = OrderForm()
-    return render(request, 'order_form.html', {'form': form, 'title': 'Добавить заказ'})
+    context = {
+        'title': 'Добавить заказ',
+        'form': form,
+        'is_admin': is_admin(request.user),
+        'is_manager': is_manager(request.user),
+    }
+    return render(request, 'order_form.html', context)
 
 
 @login_required
@@ -119,7 +155,13 @@ def order_edit(request, pk):
             return redirect('orders')
     else:
         form = OrderForm(instance=order)
-    return render(request, 'order_form.html', {'form': form, 'title': 'Редактировать заказ'})
+    context = {
+        'title': 'Редактировать заказ',
+        'form': form,
+        'is_admin': is_admin(request.user),
+        'is_manager': is_manager(request.user),
+    }
+    return render(request, 'order_form.html', context)
 
 
 @login_required

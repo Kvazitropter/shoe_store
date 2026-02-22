@@ -4,103 +4,15 @@
 
 {% block style %}
     <style>
-        .order-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 80vh;
-            padding: 20px;
-            background: #ddd;
-        }
-
-        .order-form {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px gray;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .form-title {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #333;
-            font-weight: 500;
-            font-size: 28px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 18px;
-        }
-
-        .order-form input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            box-sizing: border-box;
-        }
-
-        .order-form input:focus {
-            border-color: cornflowerblue;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(74,144,226,0.1);
-        }
-
-        .error-message {
-            color: #e74c3c;
-            font-size: 13px;
-            margin-top: 5px;
-            padding-left: 5px;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 14px;
-            background: cornflowerblue;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.1s;
-            margin-top: 10px;
-        }
-
-        .submit-btn:hover {
-            background: royalblue;
-        }
-
-        .submit-btn:active {
-            transform: scale(0.98);
-        }
-
-        .signup-message {
-            text-align: center;
-            padding-top: 20px;
-        }
-
-        .signup-message a {
-            color: royalblue;
-            font-size: 18px;
-        }
     </style>
 {% endblock style %}
 
 {% block content %}
-<div class="order-container">
+<div class="order-form-container">
     <form method="post" enctype="multipart/form-data" class="order-form">
         {% csrf_token %}
+
+        <a href="{% url 'orders' %}" class="back-arrow">&#9668;</a>
 
         <h2 class="form-title">{{ title }}</h2>
 
@@ -164,7 +76,7 @@
             {% endif %}
         </div>
 
-        <button delivered_at="submit" class="submit-btn">Подтвердить</button>
+        <button delivered_at="submit" class="btn">Подтвердить</button>
     </form>
 </div>
 {% endblock %}

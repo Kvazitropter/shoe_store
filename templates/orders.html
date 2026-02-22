@@ -16,7 +16,6 @@
         border-radius: 13px;
         padding: 20px;
         background-color: #f9f9f9;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
     .order-header {
@@ -112,74 +111,20 @@
         font-weight: bold;
     }
 
-    .empty-message {
-        text-align: center;
-        padding: 50px;
-        color: #777;
-    }
-
-    .filters-panel {
-        background: #f5f5f5;
-        padding: 15px;
-        margin-bottom: 20px;
+    .order-footer button {
+        width: auto;
     }
 
     .admin-actions {
         margin-top: 10px;
-        display: flex;
+        margin-right: 20px;
+        display: inline-flex;
         gap: 10px;
-    }
-
-    .btn {
-        padding: 5px 10px;
-        text-decoration: none;
-        border-radius: 4px;
-        background-color: cornflowerblue;
-    }
-
-    .btn:hover {
-        background-color: royalblue;
-    }
-
-    .btn-delete {
-        background-color: red;
-    }
-
-    .btn-delete:hover {
-        background-color: darkred;
-    }
-
-    .add-button {
-        position: fixed;
-        bottom:30px;
-        right:30px;
-        background-color: cornflowerblue;
-        color: white;
-        padding: 15px 25px;
-        border-radius: 50px;
-        font-weight: bold;
-        box-shadow:0 4px 8px rgba(0,0,0,0.2);
     }
 </style>
 {% endblock %}
 
 {% block content %}
-{% if is_manager or is_admin %}
-    <div class="filters-panel">
-        <form method="get">
-            <input type="text" name="search" placeholder="Поиск по коду/адресу..." value="{{ request.GET.search }}">
-            <select name="status">
-                <option value="">Все статусы</option>
-                {% for status in statuses %}
-                <option value="{{ status.id }}" {% if request.GET.status == status.id|stringformat:"s" %}selected{% endif %}>{{ status.name }}</option>
-                {% endfor %}
-            </select>
-            <input type="date" name="date_from" value="{{ request.GET.date_from }}">
-            <input type="date" name="date_to" value="{{ request.GET.date_to }}">
-            <button type="submit">Применить</button>
-        </form>
-    </div>
-{% endif %}
 <div class="container">
     {% for order in orders %}
     <div class="order-card">
@@ -209,16 +154,10 @@
                     <p>{{ item.product.description|truncatechars:100 }}</p>
                 </div>
                 <div class="item-price">
-                    <span class="old-price">{{ item.product.price|floatformat:2 }} ₽</span>
-                    <span class="new-price">{{ item.product.discounted_price|floatformat:2 }} ₽</span>
+                    <span class="old-price">{{ item.product.price }} ₽</span>
+                    <span class="new-price">{{ item.product.discounted_price }} ₽</span>
                     <span class="unit">{{ item.amount }} {{ item.product.unit.name }}</span>
                 </div>
-                {% if is_admin %}
-                    <div class="admin-actions">
-                        <a href="{% url 'order_edit' order.id %}" class="btn-edit">Редактировать</a>
-                        <a href="{% url 'order_delete' order.id %}" class="btn-delete" onclick="return confirm('Удалить заказ?')">Удалить</a>
-                    </div>
-                {% endif %}
             </div>
             {% empty %}
             <p>В заказе нет товаров</p>
@@ -226,6 +165,12 @@
         </div>
 
         <div class="order-footer">
+            {% if is_admin %}
+                <div class="admin-actions">
+                    <button class="btn"><a href="{% url 'order_edit' order.id %}">Редактировать</a></button>
+                    <button class="btn btn-delete"><a href="{% url 'order_delete' order.id %}" onclick="return confirm('Удалить заказ?')">Удалить</a></button>
+                </div>
+            {% endif %}
             Итого: {{ order.total }}
         </div>
     </div>
@@ -236,7 +181,7 @@
     {% endfor %}
 
     {% if is_admin %}
-    <a href="{% url 'order_add' %}" class="add-button">+ Добавить заказ</a>
+    <button class="btn add-btn"><a href="{% url 'order_add' %}">+ Добавить заказ</a></button>
     {% endif %}
 </div>
 {% endblock %}
