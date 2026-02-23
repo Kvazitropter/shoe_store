@@ -1,203 +1,12 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
     <title>{% block title %}Магазин обуви{% endblock %}</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-size: 18px;
-        }
-
-        body {
-            background-color: gainsboro;
-        }
-
-        .navbar {
-            height: 70px;
-            padding: 20px 30px;
-            
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            
-            position: fixed;
-            left: 0;
-            top: 0;
-            right: 0;
-            background-color: white;
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-        }
-
-        .nav-item a {
-            text-decoration: none;
-            color: dimgray;
-            font-size: 18px;
-            padding: 10px 0;
-        }
-        
-        .nav-item a:hover {
-            color: cornflowerblue;
-            border-bottom: 2px solid cornflowerblue;
-        }
-
-        .user-section {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .username {
-            color: black;
-            font-weight: bold;
-        }
-
-        .btn {
-            width: 100%;
-            color: white;
-    
-            padding: 8px 12px;
-            border: 1px solid transparent;
-            border-radius: 10px;
-            background-color: cornflowerblue;
-        }
-
-        .btn:hover {
-            background-color: royalblue;
-            cursor: pointer;
-        }
-
-        .btn a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .content {
-            padding: 100px;
-            width: 100vw;
-            height: calc(100vh - 70px);
-            margin: 0 auto;
-        }
-
-        [class$="form-container"] {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            padding: 20px;
-            background-color: gainsboro;
-        }
-
-        [class$="form"] {
-            background-color: white;
-            padding: 40px 30px;
-            border-radius: 16px;
-            width: 100%;
-            max-width: 500px;
-        }
-
-        [class$="form-title"] {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #333;
-            font-weight: 500;
-            font-size: 28px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 18px;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid gainsboro;
-            border-radius: 8px;
-            font-size: 16px;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            border-color: cornflowerblue;
-            outline: none;
-        }
-
-        textarea {
-            resize: none;
-        }
-
-        .error-message {
-            color: red;
-            margin-top: 5px;
-            padding-left: 5px;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 14px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        [class$="redirect-message"] {
-            text-align: center;
-            padding-top: 20px;
-        }
-
-        [class$="redirect-message"] a {
-            color: royalblue;
-            font-size: 18px;
-        }
-
-        .empty-massage {
-            text-align: center;
-            width: 100%;
-            color: gray;
-        }
-
-        .add-btn {
-            width: auto;
-            position: fixed;
-            bottom: 50px;
-            right: 40px;
-        }
-
-        .btn-delete {
-            background-color: red;
-        }
-
-        .btn-delete:hover {
-            background-color: darkred;
-        }
-
-        .back-arrow {
-            text-decoration: none;
-            width: 20px;
-            height: 20px;
-            font-size: 30px;
-            font-weight: bold;
-            color: gray;
-        }
-        
-        .back-arrow:hover {
-            color: dimgray;
-            cursor: pointer;
-        }
-        </style>
     {% block style %}
     {% endblock %}
 </head>
@@ -223,7 +32,7 @@
                         <button type="submit" class="btn">Выйти</button>
                     </form>
                 {% else %}
-                    <button class="btn"><a href="{% url 'login' %}">Войти</a></button>
+                    <a href="{% url 'login' %}" class="btn">Войти</a>
                 {% endif %}
             </div>
         </nav>
@@ -235,4 +44,7 @@
     </main>
 
 </body>
+<script src="{% static 'js/script.js' %}"></script>
+{% block script %}
+{% endblock script %}
 </html>

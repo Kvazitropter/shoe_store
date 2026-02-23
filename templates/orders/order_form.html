@@ -7,15 +7,13 @@
     <form method="post" enctype="multipart/form-data" class="form">
         {% csrf_token %}
 
-        <h2 class="form-title">Вход в систему</h2>
+        <a href="{% url 'orders' %}" class="back-arrow">&#9668;</a>
+
+        <h2 class="form-title">{{ title }}</h2>
 
         {{ form }}
-    
-        <button type="submit" class="btn submit-btn">Войти</button>
 
-        <div class="redirect-message">
-            <a href="{% url 'signup' %}">Создать аккаунт</a>
-        </div>
+        <button type="submit" class="submit-btn btn">Подтвердить</button>
     </form>
 </div>
 {% endblock %}

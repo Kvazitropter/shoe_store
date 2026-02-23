@@ -1,4 +1,5 @@
 from django.views.generic.edit import CreateView
+from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404
@@ -7,7 +8,7 @@ from django.db.models import Q
 from pathlib import Path
 from shoe_store.settings import BASE_DIR
 from shoe_store.models import Product, Order, Provider
-from shoe_store.forms import SignUpForm, ProductForm, OrderForm
+from shoe_store.forms import LoginForm, SignUpForm, ProductForm, OrderForm
 
 
 templates = Path(BASE_DIR) / 'templates'
@@ -30,13 +31,46 @@ class SignUpView(CreateView):
         login(self.request, user)
         return redirect('products')
 
+# def login_view(request):
+#     if request.method == 'POST':
+#         form = LoginForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             login(request, form.get_user())
+#             return redirect('products')
+#     else:
+#         form = LoginForm()
+#     context = {
+#         'title': 'Авторизация',
+#         'form': form,
+#         'is_admin': False,
+#         'is_manager': False,
+#     }
+#     return render(request, 'registration/login.html', context)
+
+
+# def signup_view(request):
+#     if request.method == 'POST':
+#         form = SignUpForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             user = form.save()
+#             login(request, user)
+#             return redirect('products')
+#     else:
+#         form = SignUpForm()
+#     context = {
+#         'title': 'Регистрация',
+#         'form': form,
+#         'is_admin': False,
+#         'is_manager': False,
+#     }
+#     return render(request, 'registration/signup.html', context)
+
 
 @login_required
 def products_page(request):
     search_query = request.GET.get('search_query', '')
     selected_provider_id = request.GET.get('selected_provider_id')
     output_order = request.GET.get('output_order')
-    html_file = templates / 'products.html'
     products = Product.objects.all() \
         .filter(
             Q(article__iregex=f'(?i){search_query}') |
@@ -57,7 +91,7 @@ def products_page(request):
         'selected_provider_id': selected_provider_id,
         'output_order': output_order,
     }
-    return render(request, html_file.as_posix(), context)
+    return render(request, 'products/products.html', context)
 
 
 @login_required
@@ -65,7 +99,6 @@ def products_page(request):
 def product_add(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
-        print(form.is_valid())
         if form.is_valid():
             form.save()
             return redirect('products')
@@ -77,7 +110,7 @@ def product_add(request):
         'is_admin': is_admin(request.user),
         'is_manager': is_manager(request.user),
     }
-    return render(request, 'product_form.html', context)
+    return render(request, 'products/product_form.html', context)
 
 
 @login_required
@@ -97,32 +130,33 @@ def product_edit(request, pk):
         'is_admin': is_admin(request.user),
         'is_manager': is_manager(request.user),
     }
-    return render(request, 'product_form.html', context)
+    return render(request, 'products/product_form.html', context)
 
 
 @login_required
 @user_passes_test(is_admin)
 def product_delete(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    product.delete()
+    if product.products_in_order.exists(): # type: ignore
+        messages.error(request, 'Невозможно удалить товар, так как он присутствует в заказe')
+    else:
+        product.delete()
+        messages.success(request, 'Товар успешно удалён')
     return redirect('products')
 
 
 @login_required
 def orders_page(request):
-    html_file = templates / 'orders.html'
-
     orders = Order.objects.all() if request.user.is_staff else Order.objects.filter(user=request.user)
     title = 'Заказы' if request.user.is_staff else 'Мои Заказы'
     
     context = {
         'title': title,
-        'is_admin': is_admin(request.user),
         'orders': orders,
         'is_admin': is_admin(request.user),
         'is_manager': is_manager(request.user),
     }
-    return render(request, html_file.as_posix(), context)
+    return render(request, 'orders/orders.html', context)
 
 
 @login_required
@@ -141,7 +175,7 @@ def order_add(request):
         'is_admin': is_admin(request.user),
         'is_manager': is_manager(request.user),
     }
-    return render(request, 'order_form.html', context)
+    return render(request, 'orders/order_form.html', context)
 
 
 @login_required
@@ -161,7 +195,7 @@ def order_edit(request, pk):
         'is_admin': is_admin(request.user),
         'is_manager': is_manager(request.user),
     }
-    return render(request, 'order_form.html', context)
+    return render(request, 'orders/order_form.html', context)
 
 
 @login_required
