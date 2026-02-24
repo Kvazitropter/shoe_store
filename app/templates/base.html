@@ -1,0 +1,50 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <title>{% block title %}Магазин обуви{% endblock %}</title>
+    {% block style %}
+    {% endblock %}
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="{% url 'products' %}">Товары</a></li>
+                {% if is_admin or is_manager %}
+                <li class="nav-item"><a href="{% url 'orders' %}">Заказы</a></li>
+                {% endif %}
+            </ul>
+
+            <div class="user-section">
+                {% if user.is_authenticated %}
+                    <span class="username">
+                        {{ user.last_name }}
+                        {{ user.first_name }}
+                        {{ user.patronymic|default:'' }}
+                    </span>
+                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn">Выйти</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn">Войти</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main class="content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+</body>
+<script src="{% static 'js/script.js' %}"></script>
+{% block script %}
+{% endblock script %}
+</html>

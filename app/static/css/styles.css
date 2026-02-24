@@ -1,0 +1,332 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+}
+
+body {
+    background-color: gainsboro;
+}
+
+.navbar {
+    height: 70px;
+    padding: 20px 30px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    background-color: white;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+}
+
+.nav-item a {
+    text-decoration: none;
+    color: dimgray;
+    font-size: 18px;
+    padding: 10px 0;
+}
+
+.nav-item a:hover {
+    color: cornflowerblue;
+    border-bottom: 2px solid cornflowerblue;
+}
+
+.user-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.username {
+    color: black;
+    font-weight: bold;
+}
+
+.btn {
+    width: 100%;
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 700;
+
+    padding: 8px 12px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background-color: cornflowerblue;
+}
+
+.btn:hover {
+    background-color: royalblue;
+    cursor: pointer;
+}
+
+.content {
+    padding: 100px;
+    width: 100vw;
+    height: calc(100vh - 70px);
+    margin: 0 auto;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+    background-color: gainsboro;
+}
+
+.form {
+    background-color: white;
+    padding: 40px 30px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 500px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 500;
+    font-size: 28px;
+}
+
+.form label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid gainsboro;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: cornflowerblue;
+    outline: none;
+}
+
+textarea {
+    resize: none;
+}
+
+.errorlist {
+    color: red;
+    margin-bottom: 10px;
+}
+
+.errorlist li {
+    list-style: none;
+}
+
+.submit-btn {
+    padding: 12px 15px;
+    margin-top: 20px;
+}
+
+.redirect-message {
+    text-align: center;
+}
+
+.redirect-message a {
+    color: royalblue;
+    font-size: 18px;
+}
+
+.empty-message {
+    text-align: center;
+    width: 100%;
+    color: gray;
+}
+
+.add-btn {
+    width: auto;
+    position: fixed;
+    bottom: 50px;
+    right: 40px;
+}
+
+.btn-delete {
+    background-color: red;
+}
+
+.btn-delete:hover {
+    background-color: darkred;
+}
+
+.back-arrow {
+    text-decoration: none;
+    width: 20px;
+    height: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    color: gray;
+}
+
+.back-arrow:hover {
+    color: dimgray;
+    cursor: pointer;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.card {
+    width: 100%;
+    background-color: white;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    gap: 20px;
+    cursor: pointer;
+}
+
+.card-img {
+    max-width: 250px;
+    object-fit: cover;
+    flex-grow: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.product-img {
+    width: 70%;
+    border-radius: inherit;
+}
+
+.placeholder-img {
+    width: 40%;
+}
+
+.card-body {
+    flex-grow: 10;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 40px;
+}
+
+.card-title {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.card-description {
+    word-break: break-all;
+}
+
+.card-discount {
+    flex-grow: 1;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.discount {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.big-discount {
+    background-color: #2E8B57;
+}
+
+.price-container {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.old-price {
+    font-size: 16px;
+    color: red;
+    text-decoration: line-through;
+}
+
+.new-price {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.unit {
+    font-size: 14px;
+    color: gray;
+    margin-left: 5px;
+}
+
+.stock {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.no-stock {
+    background-color: lightblue;
+}
+
+.card-delivery {
+    flex-grow: 1;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delivery-date {
+    font-size: 24px;
+}
+
+.manage-order {
+    display: flex;
+    margin-top: 20px;
+}
+
+.search-panel {
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.search-panel form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-panel form select {
+    height: min-content;
+    width: fit-content;
+}
+
+.manage-product {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}

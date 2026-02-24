@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+{% if is_manager or is_admin %}
+<div class="search-panel">
+    <form method="get" action="{% url 'products' %}">
+        <input
+            type="text"
+            name="search_query"
+            placeholder="Поиск..."
+            value="{{ search_query|default:'' }}"
+            autofocus
+            onfocus="this.selectionStart = this.value.length" 
+            oninput="this.form.submit()"
+        />
+        <select name="selected_provider_id" onchange="this.form.submit()">
+            <option value="" {% if not selected_provider_id %}selected{% endif %}>Все поставщики</option>
+            {% for provider in providers %}
+            <option value="{{ provider.id }}" {% if selected_provider_id|add:"0" == provider.id|add:"0" %}selected{% endif %}>{{ provider.name }}</option>
+            {% endfor %}
+        </select>
+        <select name="output_order" onchange="this.form.submit()">
+            <option value="" {% if not output_order %}selected{% endif %}>По умолчанию</option>
+            <option value="price" {% if output_order == 'price' %}selected{% endif %}>Дешевле</option>
+            <option value="-price" {% if output_order == '-price' %}selected{% endif %}>Дороже</option>
+            <option value="stock" {% if output_order == 'stock' %}selected{% endif %}>Меньше</option>
+            <option value="-stock" {% if output_order == '-stock' %}selected{% endif %}>Больше</option>
+        </select>
+    </form>
+</div>
+{% endif %}
+<div class="container">
+
+    {% for product in products %}
+    <div
+        class="card {% if product.discount >= 15.00 %}big-discount{% elif product.stock == 0 %}no-stock{% endif %}"
+        data-edit-url="{% url 'product_edit' product.id %}"
+        onclick="redirectToEdit(this)"
+    >
+        <div class="card-img">
+            {% if product.photo %}
+                <img src="{{ product.photo.url }}" alt="{{ product.type.name }}" class="product-img">
+            {% else %}
+                <img src="/media/picture.png" alt="{{ product.type.name }}" class="placeholder-img">
+            {% endif %}
+        </div>
+
+        <div class="card-body">
+            <h5 class="card-title">{{ product.category.name }} | {{ product.type.name }}</h5>
+            <div class="card-description">
+                <p>{{ product.description|truncatechars:80 }}</p>
+                <p>{{ product.provider.name }}</p>
+                <p>{{ product.provider.name }}</p>
+                <p>
+                    <span class="old-price">{{ product.price }}</span>
+                    <span class="new-price">{{ product.discounted_price }}</span>
+                </p>
+                <p>{{ product.unit.name }}</p>
+                <p>
+                    В наличии: {{ product.stock }} {{ product.unit.name }}
+                </p>
+            </div>
+
+            {% if is_admin %}
+                <div class="manage-product">
+                    <a
+                        class="btn btn-delete"
+                        href="{% url 'product_delete' product.id %}"
+                        onclick="confirmDelete(event)"
+                        style="width: fit-content;"
+                    >Удалить</a>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="card-discount">
+            <div class="discount">{{ product.discount }}%</div>
+        </div>
+    </div>
+    {% empty %}
+    <p class="empty-massage">Товары не найдены</p>
+    {% endfor %}
+
+    {% if is_admin %}
+    <a href="{% url 'product_add' %}" class="btn add-btn">+ Добавить товар</a>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block script %}
+{% if messages %}
+    {% for message in messages %}
+        <script>alert("{{ message|escapejs }}");</script>
+    {% endfor %}
+{% endif %}
+{% endblock script %}

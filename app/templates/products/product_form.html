@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <form method="post"  enctype="multipart/form-data" class="form">
+        {% csrf_token %}
+
+        <a href="{% url 'products' %}" class="back-arrow">&#9668;</a>
+
+        <h2 class="form-title">{{ title }}</h2>
+
+        {{ form }}
+
+        {% if form.instance.photo %}
+            <p>Текущее фото: {{ form.instance.photo.url }}</p>
+        {% endif %}
+    
+        <button type="submit" class="submit-btn btn">Подтвердить</button>
+    </form>
+</div>
+{% endblock %}
