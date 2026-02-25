@@ -25,6 +25,12 @@ for user in User.objects.all():
         user.save()
 ```
 
+#### Применить миграции
+
+```
+make migrate
+```
+
 #### Генерация ключа и добавление в файл .env
 
 ```bash

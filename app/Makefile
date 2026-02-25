@@ -1,5 +1,6 @@
 install:
-	pip install -r requirements.txt
+	uv venv --python 3.13
+	uv pip install -r requirements.txt
 	cp .env.example .env
 
 dev:
