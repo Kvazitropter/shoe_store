@@ -217,7 +217,7 @@ class Order(models.Model):
 
 class ProductInOrder(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='products_in_order')
-    product = models.ForeignKey(Product, on_delete=models.DO_NOTHING, related_name='products_in_order')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='products_in_order')
     amount = models.IntegerField()
 
     class Meta:

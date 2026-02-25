@@ -128,16 +128,16 @@ INSERT INTO public.role VALUES (1, 'Администратор');
 INSERT INTO public.role VALUES (2, 'Менеджер');
 INSERT INTO public.role VALUES (3, 'Авторизированный клиент');
 
-INSERT INTO public."user" VALUES (1, 1, 'Никифорова', 'Весения', 'Николаевна', '94d5ous@gmail.com', 'uzWC67');
-INSERT INTO public."user" VALUES (2, 1, 'Сазонов', 'Руслан', 'Германович', 'uth4iz@mail.com', '2L6KZG');
-INSERT INTO public."user" VALUES (3, 1, 'Одинцов', 'Серафим', 'Артёмович', 'yzls62@outlook.com', 'JlFRCZ');
-INSERT INTO public."user" VALUES (4, 2, 'Степанов', 'Михаил', 'Артёмович', '1diph5e@tutanota.com', '8ntwUp');
-INSERT INTO public."user" VALUES (5, 2, 'Ворсин', 'Петр', 'Евгеньевич', 'tjde7c@yahoo.com', 'YOyhfR');
-INSERT INTO public."user" VALUES (6, 2, 'Старикова', 'Елена', 'Павловна', 'wpmrc3do@tutanota.com', 'RSbvHv');
-INSERT INTO public."user" VALUES (7, 3, 'Михайлюк', 'Анна', 'Вячеславовна', '5d4zbu@tutanota.com', 'rwVDh9');
-INSERT INTO public."user" VALUES (8, 3, 'Ситдикова', 'Елена', 'Анатольевна', 'ptec8ym@yahoo.com', 'LdNyos');
-INSERT INTO public."user" VALUES (9, 3, 'Ворсин', 'Петр', 'Евгеньевич', '1qz4kw@mail.com', 'gynQMT');
-INSERT INTO public."user" VALUES (10, 3, 'Старикова', 'Елена', 'Павловна', '4np6se@mail.com', 'AtnDjr');
+INSERT INTO public."user" (id, role_id, last_name, first_name, patronymic, email, password, is_staff, is_superuser) VALUES (1, 1, 'Никифорова', 'Весения', 'Николаевна', '94d5ous@gmail.com', 'uzWC67', TRUE, TRUE);
+INSERT INTO public."user" (id, role_id, last_name, first_name, patronymic, email, password, is_staff, is_superuser) VALUES (2, 1, 'Сазонов', 'Руслан', 'Германович', 'uth4iz@mail.com', '2L6KZG', TRUE, TRUE);
+INSERT INTO public."user" (id, role_id, last_name, first_name, patronymic, email, password, is_staff, is_superuser) VALUES (3, 1, 'Одинцов', 'Серафим', 'Артёмович', 'yzls62@outlook.com', 'JlFRCZ', TRUE, TRUE);
+INSERT INTO public."user" (id, role_id, last_name, first_name, patronymic, email, password, is_staff, is_superuser) VALUES (4, 2, 'Степанов', 'Михаил', 'Артёмович', '1diph5e@tutanota.com', '8ntwUp', TRUE, FALSE);
+INSERT INTO public."user" (id, role_id, last_name, first_name, patronymic, email, password, is_staff, is_superuser) VALUES (5, 2, 'Ворсин', 'Петр', 'Евгеньевич', 'tjde7c@yahoo.com', 'YOyhfR', TRUE, FALSE);
+INSERT INTO public."user" (id, role_id, last_name, first_name, patronymic, email, password, is_staff, is_superuser) VALUES (6, 2, 'Старикова', 'Елена', 'Павловна', 'wpmrc3do@tutanota.com', 'RSbvHv', TRUE, FALSE);
+INSERT INTO public."user" (id, role_id, last_name, first_name, patronymic, email, password, is_staff, is_superuser) VALUES (7, 3, 'Михайлюк', 'Анна', 'Вячеславовна', '5d4zbu@tutanota.com', 'rwVDh9', FALSE, FALSE);
+INSERT INTO public."user" (id, role_id, last_name, first_name, patronymic, email, password, is_staff, is_superuser) VALUES (8, 3, 'Ситдикова', 'Елена', 'Анатольевна', 'ptec8ym@yahoo.com', 'LdNyos', FALSE, FALSE);
+INSERT INTO public."user" (id, role_id, last_name, first_name, patronymic, email, password, is_staff, is_superuser) VALUES (9, 3, 'Ворсин', 'Петр', 'Евгеньевич', '1qz4kw@mail.com', 'gynQMT', FALSE, FALSE);
+INSERT INTO public."user" (id, role_id, last_name, first_name, patronymic, email, password, is_staff, is_superuser) VALUES (10, 3, 'Старикова', 'Елена', 'Павловна', '4np6se@mail.com', 'AtnDjr', FALSE, FALSE);
 
 INSERT INTO public.producer VALUES (1, 'Kari');
 INSERT INTO public.producer VALUES (2, 'Marco Tozzi');
