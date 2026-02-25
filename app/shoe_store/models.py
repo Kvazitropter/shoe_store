@@ -164,7 +164,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class Product(models.Model):
-    article = models.CharField(max_length=255)
+    article = models.CharField(max_length=255, unique=True)
     type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name='products')
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, related_name='products')
     price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -217,7 +217,7 @@ class Order(models.Model):
 
 class ProductInOrder(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='products_in_order')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='products_in_order')
+    product = models.ForeignKey(Product, on_delete=models.DO_NOTHING, related_name='products_in_order')
     amount = models.IntegerField()
 
     class Meta:
